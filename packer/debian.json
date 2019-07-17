@@ -1,0 +1,62 @@
+{
+    "variables": {
+      "ansible_roles_path": "./ansible/roles",
+      "build_id": "{{isotime \"20060102150405\"}}",
+      "build_ref": "{{env `BUILD_REF`}}",
+      "build_name": "poc-front",
+      "disk_size": "10240",
+      "iso_checksum": "d808985468652393cf31d30fe7d6f60f5041337980b25dd00f2ab9553248b564cf38174c8251f410ddbe221e57fefc78849f9879141e25a5dfb31d8043fccc5c",
+      "iso_checksum_type": "sha512",
+      "iso_name": "debian-10.0.0-amd64-netinst.iso",
+      "local_domain": "",
+      "output_dir": "images",
+      "dynamic_mirror_url": "http://debian-cd.debian.net/debian-cd/10.0.0/amd64/iso-cd",
+      "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.0.0/amd64/iso-cd"
+    },
+  
+    "builders": [
+      {
+        "accelerator": "kvm",
+        "boot_command": [
+          "<esc><wait>",
+          "auto <wait>",
+          "console-keymaps-at/keymap=fr <wait>",
+          "console-setup/ask_detect=false <wait>",
+          "debconf/frontend=noninteractive <wait>",
+          "debian-installer=en_US <wait>",
+          "fb=false <wait>",
+          "install <wait>",
+          "kbd-chooser/method=us <wait>",
+          "keyboard-configuration/xkb-keymap=fr <wait>",
+          "locale=en_US <wait>",
+          "netcfg/get_domain={{ user `local_domain` }} <wait>",
+          "netcfg/get_hostname={{ .Name }} <wait>",
+          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+          "<enter><wait>"
+        ],
+        "boot_wait": "5s",
+        "disk_size": "{{ user `disk_size` }}",
+        "format": "qcow2",
+        "headless": true,
+        "http_directory": "{{ template_dir }}/http",
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+        "iso_urls": [
+          "{{ user `dynamic_mirror_url` }}/{{ user `iso_name` }}",
+          "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+        ],
+        "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu",
+        "qemuargs": [
+            [ "-m", "1024M" ]
+        ],
+        "shutdown_command": "sudo /sbin/halt -h -p",
+        "ssh_password": "root",
+        "ssh_port": 22,
+        "ssh_username": "root",
+        "ssh_wait_timeout": "1800s",
+        "type": "qemu",
+        "vm_name": "{{ user `build_name` }}"
+      }
+    ],
+    "provisioners": []
+  }
