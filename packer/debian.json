@@ -13,7 +13,6 @@
       "dynamic_mirror_url": "http://debian-cd.debian.net/debian-cd/10.0.0/amd64/iso-cd",
       "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.0.0/amd64/iso-cd"
     },
-  
     "builders": [
       {
         "accelerator": "kvm",
@@ -28,7 +27,7 @@
           "install <wait>",
           "kbd-chooser/method=us <wait>",
           "keyboard-configuration/xkb-keymap=fr <wait>",
-          "locale=en_US <wait>",
+          "locale=fr_FR <wait>",
           "netcfg/get_domain={{ user `local_domain` }} <wait>",
           "netcfg/get_hostname={{ .Name }} <wait>",
           "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
@@ -58,5 +57,10 @@
         "vm_name": "{{ user `build_name` }}"
       }
     ],
-    "provisioners": []
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/console-tty.sh"
+      }
+    ]
   }
