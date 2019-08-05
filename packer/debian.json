@@ -1,20 +1,7 @@
 {
-    "variables": {
-      "ansible_roles_path": "./ansible/roles",
-      "build_id": "{{isotime \"20060102150405\"}}",
-      "build_ref": "{{env `BUILD_REF`}}",
-      "build_name": "poc-front",
-      "disk_size": "10240",
-      "iso_checksum": "d808985468652393cf31d30fe7d6f60f5041337980b25dd00f2ab9553248b564cf38174c8251f410ddbe221e57fefc78849f9879141e25a5dfb31d8043fccc5c",
-      "iso_checksum_type": "sha512",
-      "iso_name": "debian-10.0.0-amd64-netinst.iso",
-      "local_domain": "",
-      "output_dir": "images",
-      "dynamic_mirror_url": "http://debian-cd.debian.net/debian-cd/10.0.0/amd64/iso-cd",
-      "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.0.0/amd64/iso-cd"
-    },
     "builders": [
       {
+        "name": "debian_10-quemu-qcow2",
         "accelerator": "kvm",
         "boot_command": [
           "<esc><wait>",
@@ -29,22 +16,22 @@
           "keyboard-configuration/xkb-keymap=fr <wait>",
           "locale=fr_FR <wait>",
           "netcfg/get_domain={{ user `local_domain` }} <wait>",
-          "netcfg/get_hostname={{ .Name }} <wait>",
+          "netcfg/get_hostname=base <wait>",
           "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
           "<enter><wait>"
         ],
         "boot_wait": "5s",
-        "disk_size": "{{ user `disk_size` }}",
+        "disk_size": "10240",
         "format": "qcow2",
         "headless": true,
         "http_directory": "{{ template_dir }}/http",
-        "iso_checksum": "{{ user `iso_checksum` }}",
-        "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+        "iso_checksum": "d808985468652393cf31d30fe7d6f60f5041337980b25dd00f2ab9553248b564cf38174c8251f410ddbe221e57fefc78849f9879141e25a5dfb31d8043fccc5c",
+        "iso_checksum_type": "sha512",
         "iso_urls": [
-          "{{ user `dynamic_mirror_url` }}/{{ user `iso_name` }}",
-          "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+          "http://debian-cd.debian.net/debian-cd/10.0.0/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso",
+          "https://cdimage.debian.org/debian-cd/10.0.0/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso"
         ],
-        "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu",
+        "output_directory": "{{ template_dir }}/../images/default",
         "qemuargs": [
             [ "-m", "1024M" ]
         ],
@@ -54,13 +41,29 @@
         "ssh_username": "root",
         "ssh_wait_timeout": "1800s",
         "type": "qemu",
-        "vm_name": "{{ user `build_name` }}"
+        "vm_name": "debian_10-quemu.qcow2"
       }
     ],
     "provisioners": [
       {
         "type": "shell",
         "script": "{{ template_dir }}/scripts/console-tty.sh"
+      },
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/install-apci.sh"
       }
+      ,
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/install-qemu_guest_agent.sh"
+      }
+    ],
+    "post-processors": [
+      {
+        "type": "checksum",
+        "checksum_types": ["sha512"],
+        "output": "{{ template_dir }}/../images/default/{{ .BuildName }}_{{.ChecksumType}}.checksum"
+      }      
     ]
   }
