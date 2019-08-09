@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-rm disk/poc-front
-virsh destroy poc-front
-virsh undefine poc-front
+rm disk/front
+virsh destroy front
+virsh undefine front
+
+rm disk/back
+virsh destroy back
+virsh undefine back

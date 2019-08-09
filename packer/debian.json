@@ -58,6 +58,11 @@
         "type": "shell",
         "script": "{{ template_dir }}/scripts/install-qemu_guest_agent.sh"
       }
+      ,
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/install-cloud_init.sh"
+      }
     ],
     "post-processors": [
       {

@@ -1,5 +1,5 @@
 <domain type='qemu' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
-  <name>poc-front</name>
+  <name>front</name>
   <memory unit='GB'>2</memory>
   <vcpu>2</vcpu>
   <os>
@@ -8,16 +8,14 @@
     <boot dev='hd'/>
     <bootmenu enable='yes'/>
   </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
-    <!-- <disk type='file' device='cdrom'>
-      <source file='/home/claude/iso/ubuntu-19.04-live-server-amd64.iso'/>
-      <target dev='hdc'/>
-      <readonly/>
-      <driver name='qemu' type='raw'/>
-    </disk> -->
     <disk type='file' device='disk'>
-      <source file='/home/claude/works/git/poc-virtual_network/images/poc-front-qemu/poc-front'/>
+      <source file='/home/claude/works/git/poc-virtual_network/disk/front'/>
       <target dev='hda'/>
       <driver name='qemu' type='qcow2' cache='none'/>
     </disk>
@@ -27,12 +25,15 @@
     <console type='pty'>
       <target type='serial' port='0'/>
     </console>
-    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0'/>
+    <!-- <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0'/> -->
     <interface type='bridge'>
-      <mac address='52:54:00:71:b1:b6'/>
       <source bridge='test_claude'/>
       <virtualport type='openvswitch'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+      <mac address='76:2d:fb:63:1e:49'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='test_claude'/>
+      <virtualport type='openvswitch'/>
     </interface>
   </devices>
 </domain>
