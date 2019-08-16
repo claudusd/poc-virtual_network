@@ -35,5 +35,11 @@
       <source bridge='test_claude'/>
       <virtualport type='openvswitch'/>
     </interface>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/home/claude/works/git/poc-virtual_network/cloudinit/front-cloud-init.iso'/>
+      <target dev='hdh' bus='ide' tray='open'/>
+      <readonly/>
+    </disk>
   </devices>
 </domain>
