@@ -16,15 +16,9 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <source file='/home/claude/works/git/poc-virtual_network/disk/front'/>
-      <target dev='hda'/>
+      <target dev='hda' bus="virtio"/>
       <driver name='qemu' type='qcow2' cache='none'/>
     </disk>
-    <serial type='pty'>
-      <target port='0'/>
-    </serial>
-    <console type='pty'>
-      <target type='serial' port='0'/>
-    </console>
     <!-- <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0'/> -->
     <interface type='bridge'>
       <source bridge='test_claude'/>
@@ -34,12 +28,26 @@
     <interface type='bridge'>
       <source bridge='test_claude'/>
       <virtualport type='openvswitch'/>
+      <mac address='76:2d:fb:63:1e:50'/>
     </interface>
+    <disk type='file' device='disk'>
+      <source file='/home/claude/works/git/poc-virtual_network/disk/disk1.img'/>
+      <target dev='hdb' bus="virtio"/>
+      <driver name='qemu' type='qcow2' cache='none'/>
+    </disk>
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
+      <target dev='hdc' bus='ide'/>
+      <address type='drive' controller='0' bus='1' unit='0'/>
       <source file='/home/claude/works/git/poc-virtual_network/cloudinit/front-cloud-init.iso'/>
-      <target dev='hdh' bus='ide' tray='open'/>
+      <!-- <target dev='hdc' bus='virtio'/> -->
       <readonly/>
     </disk>
+    <serial type='pty'>
+      <target port='0'/>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
   </devices>
 </domain>

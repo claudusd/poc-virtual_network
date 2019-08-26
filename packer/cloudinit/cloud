@@ -60,10 +60,10 @@ cloud_config_modules:
 cloud_final_modules:
  - package-update-upgrade-install
  - fan
- - puppet
- - chef
- - salt-minion
- - mcollective
+# - puppet
+# - chef
+# - salt-minion
+# - mcollective
  - rightscale_userdata
  - scripts-vendor
  - scripts-per-once
