@@ -116,6 +116,6 @@ fi
 
 if [[ $RELEASE == 'CentOS' ]]; then
 
-apt-get yum -y cloud-init
+yum install -y cloud-init
 
 fi

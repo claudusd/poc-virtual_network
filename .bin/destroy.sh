@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-virsh destroy front
-virsh undefine front
-rm disk/front
-rm cloudinit/front-cloud-init.iso
+function remove() {
+    virsh destroy $1
+    virsh undefine $1
+    rm -f disk/$1
+    rm -f cloudinit/$1-cloud-init.iso
+}
 
-virsh destroy back
-virsh undefine back
-rm disk/back
-rm cloudinit/back-cloud-init.iso
+remove 'front'
+
+remove 'back'
