@@ -8,7 +8,7 @@ apt-get install -y qemu-guest-agent
 
 fi
 
-if [[ $RELEASE == 'Centos' ]]; then
+if [[ $RELEASE == 'CentOS' ]]; then
 
 yum install -y qemu-guest-agent
 

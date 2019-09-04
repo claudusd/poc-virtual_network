@@ -114,7 +114,7 @@ EOF
 
 fi
 
-if [[ $RELEASE == 'Centos' ]]; then
+if [[ $RELEASE == 'CentOS' ]]; then
 
 apt-get yum -y cloud-init
 
