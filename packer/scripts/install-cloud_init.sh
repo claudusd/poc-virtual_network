@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+RELEASE=$(lsb_release -i -s)
+
+if [[ $RELEASE == 'Debian' ]]; then
+
 apt-get install -y cloud-init
 apt-get install -y cloud-guest-utils
-
 
 cat <<EOF > /etc/cloud/cloud.cfg
 # The top level settings are used as module
@@ -85,26 +88,34 @@ cloud_final_modules:
 
 # System and/or distro specific settings
 # (not accessible to handlers/transforms)
-system_info:
-   # This will affect which distro class gets used
-   distro: debian
-   # Default user name + that default users groups (if added/used)
-   default_user:
-     name: debian
-     lock_passwd: True
-     gecos: Debian
-     groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
-     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-     shell: /bin/bash
+# system_info:
+#    # This will affect which distro class gets used
+#    distro: debian
+#    # Default user name + that default users groups (if added/used)
+#    default_user:
+#      name: debian
+#      lock_passwd: True
+#      gecos: Debian
+#      groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
+#      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+#      shell: /bin/bash
    # Other config here will be given to the distro class and/or path classes
    paths:
       cloud_dir: /var/lib/cloud/
       templates_dir: /etc/cloud/templates/
       upstart_dir: /etc/init/
-   package_mirrors:
-     - arches: [default]
-       failsafe:
-         primary: http://deb.debian.org/debian
-         security: http://security.debian.org/
-   ssh_svcname: ssh
+   # package_mirrors:
+   #   - arches: [default]
+   #     failsafe:
+   #       primary: http://deb.debian.org/debian
+   #       security: http://security.debian.org/
+   # ssh_svcname: ssh
 EOF
+
+fi
+
+if [[ $RELEASE == 'Centos' ]]; then
+
+apt-get yum -y cloud-init
+
+fi

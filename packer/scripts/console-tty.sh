@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+RELEASE=$(lsb_release -i -s)
+
+if [[ $RELEASE == 'Debian' ]]; then
+
 cat > /etc/default/grub <<- EOM
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
@@ -14,3 +18,5 @@ GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=
 EOM
 
 update-grub2
+
+fi

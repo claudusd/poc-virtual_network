@@ -17,7 +17,7 @@
           "locale=fr_FR <wait>",
           "netcfg/get_domain={{ user `local_domain` }} <wait>",
           "netcfg/get_hostname=base <wait>",
-          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian.cfg <wait>",
           "<enter><wait>"
         ],
         "boot_wait": "5s",
@@ -31,17 +31,46 @@
           "http://debian-cd.debian.net/debian-cd/10.0.0/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso",
           "https://cdimage.debian.org/debian-cd/10.0.0/amd64/iso-cd/debian-10.0.0-amd64-netinst.iso"
         ],
-        "output_directory": "{{ template_dir }}/../images/default",
+        "output_directory": "{{ template_dir }}/../images/debian",
         "qemuargs": [
             [ "-m", "1024M" ]
         ],
-        "shutdown_command": "sudo /sbin/halt -h -p",
+        "shutdown_command": "/sbin/halt -h -p",
         "ssh_password": "root",
         "ssh_port": 22,
         "ssh_username": "root",
         "ssh_wait_timeout": "1800s",
         "type": "qemu",
         "vm_name": "debian_10-quemu.qcow2"
+      },
+      {
+        "name": "centos_7-6-quemu-qcow2",
+        "accelerator": "kvm",
+        "boot_command": [
+          "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos.cfg<enter><wait>"
+        ],
+        "boot_wait": "5s",
+        "disk_size": "10240",
+        "format": "qcow2",
+        "headless": true,
+        "http_directory": "{{ template_dir }}/http",
+        "iso_checksum": "38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c",
+        "iso_checksum_type": "sha256",
+        "iso_urls": [
+          "http://mirror.in2p3.fr/linux/CentOS/7.6.1810/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso",
+          "http://miroir.univ-lorraine.fr/centos/7.6.1810/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
+        ],
+        "output_directory": "{{ template_dir }}/../images/centos",
+        "qemuargs": [
+            [ "-m", "1024M" ]
+        ],
+        "shutdown_command": "/sbin/halt -h -p",
+        "ssh_password": "root",
+        "ssh_port": 22,
+        "ssh_username": "root",
+        "ssh_wait_timeout": "1800s",
+        "type": "qemu",
+        "vm_name": "centos_7-6-quemu.qcow2"
       }
     ],
     "provisioners": [
@@ -68,7 +97,7 @@
       {
         "type": "checksum",
         "checksum_types": ["sha512"],
-        "output": "{{ template_dir }}/../images/default/{{ .BuildName }}_{{.ChecksumType}}.checksum"
+        "output": "{{ template_dir }}/../images/{{ .BuildName }}_{{.ChecksumType}}.checksum"
       }      
     ]
   }

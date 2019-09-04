@@ -5,6 +5,7 @@ virsh undefine front
 rm disk/front
 rm cloudinit/front-cloud-init.iso
 
-# rm disk/back
-# virsh destroy back
-# virsh undefine back
+virsh destroy back
+virsh undefine back
+rm disk/back
+rm cloudinit/back-cloud-init.iso
