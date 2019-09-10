@@ -26,11 +26,19 @@ This VM is build with packer and ansible. This is debian 10 (buster).
 
 
 ```
+iptables -t nat -A POSTROUTING -o ens1 -j MASQUERADE
+
+iptables -A FORWARD -i ens1 -o ens2 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+iptables -A FORWARD -i ens2 -o ens1 -j ACCEPT
+```
+
+```
 iptables -t nat -A POSTROUTING -o ens2 -j MASQUERADE
 
-iptables -A FORWARD -i ens2 -o ens3 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i ens2 -o ens1 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-iptables -A FORWARD -i ens3 -o ens2 -j ACCEPT
+iptables -A FORWARD -i ens1 -o ens2 -j ACCEPT
 ```
 
 ### Package

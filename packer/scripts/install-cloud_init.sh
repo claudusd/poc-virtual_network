@@ -5,7 +5,17 @@ RELEASE=$(lsb_release -i -s)
 if [[ $RELEASE == 'Debian' ]]; then
 
 apt-get install -y cloud-init
-apt-get install -y cloud-guest-utils
+apt-get install -y cloud-tools 
+apt-get install -y cloud-initramfs-growroot
+
+fi
+
+if [[ $RELEASE == 'CentOS' ]]; then
+
+yum install -y cloud-init
+yum install -y cloud-utils-growpart
+
+fi
 
 cat <<EOF > /etc/cloud/cloud.cfg
 # The top level settings are used as module
@@ -88,7 +98,7 @@ cloud_final_modules:
 
 # System and/or distro specific settings
 # (not accessible to handlers/transforms)
-# system_info:
+system_info:
 #    # This will affect which distro class gets used
 #    distro: debian
 #    # Default user name + that default users groups (if added/used)
@@ -110,12 +120,8 @@ cloud_final_modules:
    #       primary: http://deb.debian.org/debian
    #       security: http://security.debian.org/
    # ssh_svcname: ssh
+growpart:
+  mode: auto
+  devices: ['/', '/dev/vda2']
+  ignore_growroot_disabled: false
 EOF
-
-fi
-
-if [[ $RELEASE == 'CentOS' ]]; then
-
-yum install -y cloud-init
-
-fi

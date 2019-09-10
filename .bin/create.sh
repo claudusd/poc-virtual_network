@@ -54,6 +54,7 @@ config:
         - type: static
           address: '10.10.0.2'
           netmask: '255.255.255.0'
+          gateway: '10.10.0.1'
           dns_nameservers:
             - '192.168.100.75'
             - '192.168.100.74'
