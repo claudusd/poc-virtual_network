@@ -9,7 +9,7 @@ create: ## Create VM with libvirt
 	.bin/create.sh
 
 build: ## Build image with packer
-	packer build -force -parallel=true packer/debian.json
+	packer build -force -parallel=true -except=ubuntu_18-04-3-quemu-qcow2 packer/base.json
 
 destroy: ## Destroy
 	.bin/destroy.sh

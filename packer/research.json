@@ -1,0 +1,25 @@
+{
+    "builders": [
+        {
+            "name": "debian_10-front",
+            "disk_image": true,
+            "accelerator": "kvm",
+            "iso_url": "{{ template_dir }}/../images/debian/debian_10-quemu.qcow2",
+            "iso_checksum_url": "{{ template_dir }}/../images/debian_10-quemu-qcow2_sha512.checksum",
+            "format": "qcow2",
+            "qemuargs": [
+                [ "-m", "1024M" ]
+            ],
+            "output_directory": "{{ template_dir }}/../images/research_front",
+            "type": "qemu",
+            "vm_name": "research_front.qcow2",
+            "shutdown_command": "/sbin/halt -h -p",
+            "ssh_password": "root",
+            "ssh_port": 22,
+            "ssh_username": "root",
+            "ssh_wait_timeout": "1800s",
+            "headless": true,
+            "boot_wait": "5s"
+        }
+    ]
+}

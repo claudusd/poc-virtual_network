@@ -71,6 +71,51 @@
         "ssh_wait_timeout": "1800s",
         "type": "qemu",
         "vm_name": "centos_7-6-quemu.qcow2"
+      },
+      {
+        "name": "ubuntu_18-04-3-quemu-qcow2",
+        "accelerator": "kvm",
+        "boot_command": [
+          "<esc><wait>",
+          "<esc><wait>",
+          "<enter><wait>",
+          "/install/vmlinuz<wait>",
+          "auto<wait>",
+          "console-setup/ask_detect=false<wait>",
+          "console-setup/layoutcode=us<wait>",
+          "console-setup/modelcode=pc105<wait>",
+          "debconf/frontend=noninteractive<wait>",
+          "debian-installer=en_US<wait>",
+          "fb=false<wait>",
+          "initrd=/install/initrd.gz<wait>",
+          "kbd-chooser/method=us<wait>",
+          "locale=en_US<wait>",
+          "noapic<wait>",
+          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu.cfg<wait>",
+          "-- <wait>",
+          "<enter><wait>"
+        ],
+        "boot_wait": "5s",
+        "disk_size": "10240",
+        "format": "qcow2",
+        "headless": true,
+        "http_directory": "{{ template_dir }}/http",
+        "iso_checksum": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
+        "iso_checksum_type": "sha256",
+        "iso_urls": [
+          "http://cdimage.ubuntu.com/releases/18.04.3/release/ubuntu-18.04.3-server-amd64.iso"
+        ],
+        "output_directory": "{{ template_dir }}/../images/ubuntu",
+        "qemuargs": [
+            [ "-m", "1024M" ]
+        ],
+        "shutdown_command": "/sbin/halt -h -p",
+        "ssh_password": "root",
+        "ssh_port": 22,
+        "ssh_username": "root",
+        "ssh_wait_timeout": "1800s",
+        "type": "qemu",
+        "vm_name": "ubuntu_18-04-3-quemu.qcow2"
       }
     ],
     "provisioners": [
