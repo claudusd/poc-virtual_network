@@ -1,5 +1,5 @@
 <domain type='qemu' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
-  <name>back</name>
+  <name>back_2</name>
   <memory unit='GB'>2</memory>
   <vcpu>2</vcpu>
   <os>
@@ -15,7 +15,7 @@
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
-      <source file='/home/claude/works/git/poc-virtual_network/disk/back'/>
+      <source file='/home/claude/works/git/poc-virtual_network/disk/back_2'/>
       <target dev='hda' bus="virtio"/>
       <driver name='qemu' type='qcow2' cache='none'/>
     </disk>
@@ -23,7 +23,7 @@
     <interface type='bridge'>
       <source bridge='test_claude'/>
       <virtualport type='openvswitch'/>
-      <mac address='76:2d:fb:63:1e:51'/>
+      <mac address='76:2d:fb:63:1e:52'/>
     </interface>
     <!-- <disk type='file' device='disk'>
       <source file='/home/claude/works/git/poc-virtual_network/disk/disk1.img'/>
@@ -34,7 +34,7 @@
       <driver name='qemu' type='raw'/>
       <target dev='hdc' bus='ide'/>
       <address type='drive' controller='0' bus='1' unit='0'/>
-      <source file='/home/claude/works/git/poc-virtual_network/cloudinit/back-cloud-init.iso'/>
+      <source file='/home/claude/works/git/poc-virtual_network/cloudinit/back_2-cloud-init.iso'/>
        <target dev='hdc' bus='virtio'/>
       <readonly/>
     </disk>

@@ -9,4 +9,6 @@ function remove() {
 
 remove 'front'
 
-remove 'back'
+remove 'back_1'
+
+remove 'back_2'

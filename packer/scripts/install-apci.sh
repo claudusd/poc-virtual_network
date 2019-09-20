@@ -2,7 +2,7 @@
 
 RELEASE=$(lsb_release -i -s)
 
-if [[ $RELEASE == 'Debian' ]]; then
+if [ $RELEASE == 'Debian' ] || [ $RELEASE == 'Ubuntu' ]; then
 
 apt-get install -y acpid
 

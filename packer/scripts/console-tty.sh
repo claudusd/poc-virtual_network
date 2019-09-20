@@ -2,12 +2,12 @@
 
 RELEASE=$(lsb_release -i -s)
 
-if [[ $RELEASE == 'Debian' ]]; then
+if [ $RELEASE == 'Debian' ] || [ $RELEASE == 'Ubuntu' ]; then
 
 cat > /etc/default/grub <<- EOM
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
-GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo $RELEASE`
 
 GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0,115200n8 console=tty1"
 GRUB_CMDLINE_LINUX=""

@@ -76,24 +76,22 @@
         "name": "ubuntu_18-04-3-quemu-qcow2",
         "accelerator": "kvm",
         "boot_command": [
-          "<esc><wait>",
-          "<esc><wait>",
-          "<enter><wait>",
-          "/install/vmlinuz<wait>",
-          "auto<wait>",
-          "console-setup/ask_detect=false<wait>",
-          "console-setup/layoutcode=us<wait>",
-          "console-setup/modelcode=pc105<wait>",
-          "debconf/frontend=noninteractive<wait>",
-          "debian-installer=en_US<wait>",
-          "fb=false<wait>",
-          "initrd=/install/initrd.gz<wait>",
-          "kbd-chooser/method=us<wait>",
-          "locale=en_US<wait>",
-          "noapic<wait>",
-          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu.cfg<wait>",
-          "-- <wait>",
-          "<enter><wait>"
+          "<esc><f6><esc>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs>",
+          "/install/linux ",
+          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu.cfg ",
+          "debian-installer=en_US auto=true locale=en_US kbd-chooser/method=fr ",
+          "console-setup/ask_detect=false keyboard-configuration/layoutcode=fr ",
+          "hostname=cri-ubuntu-18-04 ",
+          "initrd=/install/initrd.gz quiet --- <enter>"
         ],
         "boot_wait": "5s",
         "disk_size": "10240",
@@ -110,7 +108,7 @@
             [ "-m", "1024M" ]
         ],
         "shutdown_command": "/sbin/halt -h -p",
-        "ssh_password": "root",
+        "ssh_password": "root_8889",
         "ssh_port": 22,
         "ssh_username": "root",
         "ssh_wait_timeout": "1800s",
@@ -136,6 +134,11 @@
       {
         "type": "shell",
         "script": "{{ template_dir }}/scripts/install-cloud_init.sh"
+      }
+      ,
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/access.sh"
       }
     ],
     "post-processors": [

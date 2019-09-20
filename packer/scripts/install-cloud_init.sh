@@ -2,10 +2,18 @@
 
 RELEASE=$(lsb_release -i -s)
 
-if [[ $RELEASE == 'Debian' ]]; then
+if [ $RELEASE == 'Debian' ] || [ $RELEASE == 'Ubuntu' ]; then
 
 apt-get install -y cloud-init
+
+if [ $RELEASE == 'Debian' ]; then
 apt-get install -y cloud-tools 
+fi
+
+if [ $RELEASE == 'Ubuntu' ]; then
+apt-get install -y linux-cloud-tools
+fi
+
 apt-get install -y cloud-initramfs-growroot
 
 DISTRO="debian"
@@ -80,7 +88,7 @@ cloud_config_modules:
  - ssh-im/etc/cloud/cloud.cfg
  - locale/etc/cloud/cloud.cfg
  - set-passwords
- #- grub-dpkg
+ - grub-dpkg
  - apt-pipelining
  - apt-configure
  - ntp
@@ -91,7 +99,7 @@ cloud_config_modules:
 
 # The modules that run in the 'final' stage
 cloud_final_modules:
- - package-update-upgrade-install
+ #- package-update-upgrade-install
  - fan
  - puppet
  - chef
@@ -115,13 +123,13 @@ system_info:
    # This will affect which distro class gets used
    distro: ${DISTRO}
    # Default user name + that default users groups (if added/used)
-  #  default_user:
-  #    name: limosadm
-  #    lock_passwd: True
-  #    gecos: Limosadm
-  #    groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
-  #    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-  #    shell: /bin/bash
+   default_user:
+#     name: limosadm
+     lock_passwd: True
+     gecos: Limosadm
+     groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
+     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+     shell: /bin/bash
   #    ssh_authorized_keys:
   #      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWZG/U964fhPxt1phecXR4i1vUPzF4yS9W5X4ac4N5gc1CipYoUJPSGI/TtTaCDvmXwZ0Rh8NtJoI62RIoftSThys0OQ41JNYyDKROElBusvs0Nr8Dl3g6W51rRsddAmAgzTBznfmzKuLIrPx0H4SKQGe8xZFSR4c3FOXbfIMeLaLPkCA+AVPpzoAwrsZiWg16efvtlkbz/8Yt2VpiBnmvfx3R2g6dPjQK0gT0PhJKfLsIO6tyMigtBWn6GWcFMTFD09vTnSWvRII2UyoXbg18/z1O2Slw66/cLle8t24saVsV3XklPr+/mgfsR7EMIrw1xuohqQrynMOeczw/k06hxEqKyWwIGJ3E49iewXGXHpK6TNDgzzMNEuB4kWUt3sWvaNPLo3x1Z+BKUPUjSH8Zv5a6JdY+h0qhe+ZOY+mtMPMak63fHFq7rMLcV2a1vqrwJ6sM761LI7LOaTI5okGr4ohCwpA1XOtDY3ZlqSj2MvDQPa9lelY4RR/uVspCW03gDyPFEx2iiW2FvkGTrgRwWC6SU28NMoATeLrtgJS8Fe6pvlskBah3Amc9PwNHR9lj2AnQFW2oLErMjfW+oljnXYa6ub5g/BBtLPEBoZfyJHjuwd+Tv2bRBMQp7WJkzzCTkIPuzA5oDX55wtgp67QjxrcmH8Hiq38t0awXz3oDFw== limosadm@isima.fr
    # Other config here will be given to the distro class and/or path classes
@@ -137,10 +145,11 @@ system_info:
    # ssh_svcname: ssh
 growpart:
   mode: auto
-  devices: ['/', '/dev/vda2']
+  devices: ['/']
   ignore_growroot_disabled: false
 
 users:
+  - default
   - name: limosadm
     lock_passwd: True
     gecos: Limosadm
