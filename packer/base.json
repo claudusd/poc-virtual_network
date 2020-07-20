@@ -114,31 +114,104 @@
         "ssh_wait_timeout": "1800s",
         "type": "qemu",
         "vm_name": "ubuntu_18-04-3-quemu.qcow2"
+      },
+      {
+        "name": "ubuntu_19-04-quemu-qcow2",
+        "accelerator": "kvm",
+        "boot_command": [
+          "<esc><f6><esc>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs>",
+          "/install/linux ",
+          "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu.cfg ",
+          "debian-installer=en_US auto=true locale=en_US kbd-chooser/method=fr ",
+          "console-setup/ask_detect=false keyboard-configuration/layoutcode=fr ",
+          "hostname=cri-ubuntu-19-04 ",
+          "initrd=/install/initrd.gz quiet --- <enter>"
+        ],
+        "boot_wait": "5s",
+        "disk_size": "4096",
+        "format": "qcow2",
+        "headless": true,
+        "http_directory": "{{ template_dir }}/http",
+        "iso_checksum": "7e8a0d07522f591dfee9bc9fcd7c05466763161e6cb0117906655bce1750b2fa",
+        "iso_checksum_type": "sha256",
+        "iso_urls": [
+          "http://cdimage.ubuntu.com/releases/19.04/release/ubuntu-19.04-server-amd64.iso"
+
+        ],
+        "output_directory": "{{ template_dir }}/../images/ubuntu",
+        "qemuargs": [
+            [ "-m", "1024M" ]
+        ],
+        "shutdown_command": "/sbin/halt -h -p",
+        "ssh_password": "root_8889",
+        "ssh_port": 22,
+        "ssh_username": "root",
+        "ssh_wait_timeout": "1800s",
+        "type": "qemu",
+        "vm_name": "ubuntu_19-04-quemu.qcow2"
       }
     ],
     "provisioners": [
       {
         "type": "shell",
-        "script": "{{ template_dir }}/scripts/console-tty.sh"
+        "script": "{{ template_dir }}/scripts/console-tty.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
       },
       {
         "type": "shell",
-        "script": "{{ template_dir }}/scripts/install-apci.sh"
+        "script": "{{ template_dir }}/scripts/install-apci.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
       }
       ,
       {
         "type": "shell",
-        "script": "{{ template_dir }}/scripts/install-qemu_guest_agent.sh"
+        "script": "{{ template_dir }}/scripts/install-qemu_guest_agent.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
       }
       ,
       {
         "type": "shell",
-        "script": "{{ template_dir }}/scripts/install-cloud_init.sh"
+        "script": "{{ template_dir }}/scripts/install-cloud_init.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
       }
       ,
       {
         "type": "shell",
-        "script": "{{ template_dir }}/scripts/access.sh"
+        "script": "{{ template_dir }}/scripts/access.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
+      }
+      ,
+      {
+        "type": "shell",
+        "script": "{{ template_dir }}/scripts/limosadm.sh",
+        "only": [
+          "ubuntu_18-04-3-quemu-qcow2", "ubuntu_19-04-quemu-qcow2",
+          "centos_7-6-quemu-qcow2", "debian_10-quemu-qcow2"
+        ]
       }
     ],
     "post-processors": [

@@ -7,8 +7,8 @@ function remove() {
     rm -f cloudinit/$1-cloud-init.iso
 }
 
-remove 'front'
+# remove 'front'
 
 remove 'back_1'
 
-remove 'back_2'
+# remove 'back_2'

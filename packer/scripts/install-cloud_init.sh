@@ -124,39 +124,18 @@ system_info:
    distro: ${DISTRO}
    # Default user name + that default users groups (if added/used)
    default_user:
-#     name: limosadm
      lock_passwd: True
-     gecos: Limosadm
+     gecos: Default
      groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
      shell: /bin/bash
-  #    ssh_authorized_keys:
-  #      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWZG/U964fhPxt1phecXR4i1vUPzF4yS9W5X4ac4N5gc1CipYoUJPSGI/TtTaCDvmXwZ0Rh8NtJoI62RIoftSThys0OQ41JNYyDKROElBusvs0Nr8Dl3g6W51rRsddAmAgzTBznfmzKuLIrPx0H4SKQGe8xZFSR4c3FOXbfIMeLaLPkCA+AVPpzoAwrsZiWg16efvtlkbz/8Yt2VpiBnmvfx3R2g6dPjQK0gT0PhJKfLsIO6tyMigtBWn6GWcFMTFD09vTnSWvRII2UyoXbg18/z1O2Slw66/cLle8t24saVsV3XklPr+/mgfsR7EMIrw1xuohqQrynMOeczw/k06hxEqKyWwIGJ3E49iewXGXHpK6TNDgzzMNEuB4kWUt3sWvaNPLo3x1Z+BKUPUjSH8Zv5a6JdY+h0qhe+ZOY+mtMPMak63fHFq7rMLcV2a1vqrwJ6sM761LI7LOaTI5okGr4ohCwpA1XOtDY3ZlqSj2MvDQPa9lelY4RR/uVspCW03gDyPFEx2iiW2FvkGTrgRwWC6SU28NMoATeLrtgJS8Fe6pvlskBah3Amc9PwNHR9lj2AnQFW2oLErMjfW+oljnXYa6ub5g/BBtLPEBoZfyJHjuwd+Tv2bRBMQp7WJkzzCTkIPuzA5oDX55wtgp67QjxrcmH8Hiq38t0awXz3oDFw== limosadm@isima.fr
    # Other config here will be given to the distro class and/or path classes
    paths:
       cloud_dir: /var/lib/cloud/
       templates_dir: /etc/cloud/templates/
       upstart_dir: /etc/init/
-   # package_mirrors:
-   #   - arches: [default]
-   #     failsafe:
-   #       primary: http://deb.debian.org/debian
-   #       security: http://security.debian.org/
-   # ssh_svcname: ssh
 growpart:
   mode: auto
   devices: ['/']
   ignore_growroot_disabled: false
-
-users:
-  - default
-  - name: limosadm
-    lock_passwd: True
-    gecos: Limosadm
-    groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
-    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-    shell: /bin/bash
-    ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWZG/U964fhPxt1phecXR4i1vUPzF4yS9W5X4ac4N5gc1CipYoUJPSGI/TtTaCDvmXwZ0Rh8NtJoI62RIoftSThys0OQ41JNYyDKROElBusvs0Nr8Dl3g6W51rRsddAmAgzTBznfmzKuLIrPx0H4SKQGe8xZFSR4c3FOXbfIMeLaLPkCA+AVPpzoAwrsZiWg16efvtlkbz/8Yt2VpiBnmvfx3R2g6dPjQK0gT0PhJKfLsIO6tyMigtBWn6GWcFMTFD09vTnSWvRII2UyoXbg18/z1O2Slw66/cLle8t24saVsV3XklPr+/mgfsR7EMIrw1xuohqQrynMOeczw/k06hxEqKyWwIGJ3E49iewXGXHpK6TNDgzzMNEuB4kWUt3sWvaNPLo3x1Z+BKUPUjSH8Zv5a6JdY+h0qhe+ZOY+mtMPMak63fHFq7rMLcV2a1vqrwJ6sM761LI7LOaTI5okGr4ohCwpA1XOtDY3ZlqSj2MvDQPa9lelY4RR/uVspCW03gDyPFEx2iiW2FvkGTrgRwWC6SU28NMoATeLrtgJS8Fe6pvlskBah3Amc9PwNHR9lj2AnQFW2oLErMjfW+oljnXYa6ub5g/BBtLPEBoZfyJHjuwd+Tv2bRBMQp7WJkzzCTkIPuzA5oDX55wtgp67QjxrcmH8Hiq38t0awXz3oDFw== limosadm@isima.fr
-
 EOF
